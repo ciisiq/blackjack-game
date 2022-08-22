@@ -2,13 +2,32 @@
 
 const computerPoints = document.querySelector(".computer-points");
 const userPoints = document.querySelector(".user-points");
-// console.log(userPoints);
+const btnHint = document.querySelector(".hint");
+const btnStand = document.querySelector(".stand");
+const btnRestart = document.querySelector(".restart");
+const computerCards = document.querySelector(".computer-cards");
+const userCards = document.querySelector(".user-cards");
 
 let countComputerPoints = 0;
 let countUserPoints = 0;
 
 computerPoints.textContent = countComputerPoints;
 userPoints.textContent = countUserPoints;
+
+//Function for to update the count points;
+const countPoints = () => {
+  if (getCards.name === "face") {
+    countComputerPoints += computerPoints.textContent = 10;
+    countUserPoints += userPoints.textContent = 10;
+  } else if (getCards.name === "ace") {
+    let aceValue = randomAceValue();
+    countComputerPoints += computerPoints.textContent = aceValue;
+    countUserPoints += userPoints.textContent = aceValue;
+  } else {
+    countComputerPoints += computerPoints.textContent = getCards.value;
+    countUserPoints += userPoints.textContent = getCards.value;
+  }
+};
 
 //Function for random the cards for to give
 const randomCards = () => {
@@ -48,6 +67,8 @@ const checkRules = () => {
     //make the logic for the computer(?)
   } else if (countUserPoints < 21) {
     console.log(`Do you want stand or hint?`);
+    // If Hint call function Hint;
+    //If Sant call function Stand;
   }
 };
 
