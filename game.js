@@ -10,109 +10,50 @@ let countUserPoints = 0;
 computerPoints.textContent = countComputerPoints;
 userPoints.textContent = countUserPoints;
 
-const getCards = () => [
-  {
-    image: "images/",
-    back: "images/",
-    name: "ace",
-  },
-  {
-    image: "images/",
-    back: "images/",
-    name: "2",
-  },
-  {
-    image: "images/",
-    back: "images/",
-    name: "face",
-  },
-  {
-    image: "images/",
-    back: "images/",
-    name: "ace",
-  },
-  {
-    image: "images/",
-    back: "images/",
-    name: "3",
-  },
-  {
-    image: "images/",
-    back: "images/",
-    name: "face",
-  },
-  {
-    image: "images/",
-    back: "images/",
-    name: "ace",
-  },
-  {
-    image: "images/",
-    back: "images/",
-    name: "4",
-  },
-  {
-    image: "images/",
-    back: "images/",
-    name: "face",
-  },
-  {
-    image: "images/",
-    back: "images/",
-    name: "ace",
-  },
-  {
-    image: "images/",
-    back: "images/",
-    name: "5",
-  },
-  {
-    image: "images/",
-    back: "images/",
-    name: "face",
-  },
-];
-
+//Function for random the cards for to give
 const randomCards = () => {
   const cards = getCards();
   cards.sort(() => Math.random() - 0.5);
   return cards;
 };
 
-// console.log(randomAceCards());
-
-const TestData = [
-  {
-    image: "images/",
-    back: "images/",
-    name: "ace",
-  },
-  {
-    image: "images/",
-    back: "images/",
-    name: "2",
-  },
-  {
-    image: "images/",
-    back: "images/",
-    name: "face",
-  },
-];
-
-console.log(TestData[1].name);
-
-const randomAceCards = (min, max) => {
-  min = 1;
-  max = 11;
-  let aceRandom = 0;
-
-  for (let i = 0; i < TestData.length; i++) {
-    if (TestData[i].name === "ace") {
-      aceRandom = Math.floor(Math.random() * (max + 1 - min)) + min;
-    }
-  }
-  console.log(aceRandom);
+//Function for to make the value for Ace cards be 1 or 11;
+const randomAceValue = () => {
+  let aceRandom;
+  aceRandom = Math.floor(Math.random() < 0.5 ? 1 : 11);
   return aceRandom;
 };
 
-console.log(randomAceCards());
+const checkRules = () => {
+  //check points from both if it is more than 21
+  if (countComputerPoints > 21) {
+    console.log(`Computer Loose the game!`);
+    //Ask if user want to play again
+  } else if (countUserPoints > 21) {
+    console.log(`You Loose the game!`);
+    //Ask if user want to play again
+  }
+
+  //check points from both if it is == 21
+  if (countComputerPoints === 21) {
+    console.log(`BLACKJACK! Computer win!!`);
+    //Ask if user want to play again
+  } else if (countUserPoints === 21) {
+    console.log(`BLACKJACK! You win!!`);
+    //Ask if user want to play again
+  }
+
+  //check points from both if it is < 21
+  if (countComputerPoints < 21) {
+    //make the logic for the computer(?)
+  } else if (countUserPoints < 21) {
+    console.log(`Do you want stand or hint?`);
+  }
+};
+
+console.log(randomAceValue());
+
+// for (let i = 0; i < TestData.length; i++) {
+//   if (TestData[i].name === "ace") {
+//   }
+// }
