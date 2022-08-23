@@ -1,14 +1,12 @@
 // If I used some code from outside, you can see on "plan.md" inside the folder plan 😉
 
-console.log(getCards());
-
 const computerPoints = document.querySelector(".computer-points");
 const userPoints = document.querySelector(".user-points");
 const btnHint = document.querySelector(".hint");
 const btnStand = document.querySelector(".stand");
 const btnRestart = document.querySelector(".restart");
-const computerCards = document.querySelector(".computer-cards");
-const userCards = document.querySelector(".user-cards");
+const computerCards = document.querySelector("#computer-cards");
+const userCards = document.querySelector("#user-cards");
 
 let countComputerPoints = 0;
 let countUserPoints = 0;
@@ -30,6 +28,15 @@ const startGame = () => {
       countComputerPoints += computerPoints.textContent = getCards.value;
       countUserPoints += userPoints.textContent = getCards.value;
     }
+  };
+
+  const hintButton = () => {
+    // give more 1 card
+    checkRules();
+  };
+
+  const StandButton = () => {
+    checkRules();
   };
 
   // Fucntion with the rules of the game
@@ -54,18 +61,26 @@ const startGame = () => {
 
     //check points from both if it is < 21
     if (countComputerPoints < 21) {
-      //make the logic for the computer(?)
+      if (countComputerPoints < 17) {
+        btnHint.addEventListener("click", hintButton);
+      } else {
+        btnStand.addEventListener("click", StandButton);
+      }
     } else if (countUserPoints < 21) {
       console.log(`Do you want stand or hint?`);
       // If Hint call function Hint;
-      //If Sant call function Stand;
+      btnHint.addEventListener("click", hintButton);
+      //Else call function Stand;
+      btnStand.addEventListener("click", StandButton);
     }
   };
-
-  console.log(randomAceValue());
-
-  // for (let i = 0; i < TestData.length; i++) {
-  //   if (TestData[i].name === "ace") {
-  //   }
-  // }
 };
+
+startGame();
+
+// restart the game
+const resetGame = () => {
+  startGame();
+};
+
+btnRestart.addEventListener("click", resetGame);

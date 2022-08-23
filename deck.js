@@ -1,11 +1,15 @@
 class deck {
-  constructor() {}
+  constructor() {
+    this.hand =
+      // prettier-ignore
+      ["AS","KS","QS","JS","0S","9S","8S","7S","AC","KC","QC","JC","0C","9C","8C","7C","AD","KD","QD","JD","0D","9D","8D","7D","AH","KH","QH","JH","0H","9H","8H","7H"];
+  }
 }
 
 //Function for random the cards before to give
 const randomCards = () => {
-  const cards = getCards();
-  cards.sort(() => Math.random() - 0.5);
+  const cards = new deck();
+  cards.hand.sort(() => Math.random() - 0.5);
   return cards;
 };
 
