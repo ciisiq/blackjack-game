@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
 * {
   padding: 0;
   margin: 0;
@@ -21,13 +23,18 @@ a {
   font-weight: 600;
 }
 
+a:hover {
+  border-bottom: 1px solid #3dd94b;
+}
+
 .logo {
   margin-left: 10px;
 }
 
 /* -------- Table game ---------- */
 
-.table-game {
+.table-game,
+.rules-game {
   background: radial-gradient(#56aa4e, #0d3c30);
   height: 100vh;
   display: flex;
@@ -184,4 +191,68 @@ button:hover {
 button:active {
   box-shadow: none;
   transform: translateY(0);
+}
+
+/* -------- Rule page  ---------- */
+
+.title-rule {
+  margin-bottom: 50px;
+}
+p {
+  color: #ffffff;
+  font-size: 24px;
+  font-weight: 600;
+
+  text-align: center;
+}
+
+.container-choices {
+  display: grid;
+  grid-template-columns: 250px 250px;
+  grid-template-rows: auto;
+  grid-template-areas:
+    " hint stand"
+    " hint-p stand-p";
+  margin-top: 50px;
+  gap: 10px;
+}
+
+.rule-btn-stand {
+  grid-area: stand;
+  justify-self: center;
+}
+
+.rule-btn-hint {
+  grid-area: hint;
+  justify-self: center;
+}
+
+.hint-rule {
+  grid-area: hint-p;
+  justify-self: center;
+  align-items: center;
+}
+
+.stand-rule {
+  grid-area: stand-p;
+}
+
+.rule-card {
+  width: 150px;
+  height: 230px;
+}
+
+.rule-card:hover {
+  box-shadow: 0 20px 20px -4px rgb(220, 202, 128);
+}
+
+.container-cards {
+  display: flex;
+  align-items: center;
+  margin: 50px 0px 50px 0px;
+  justify-content: center;
+}
+
+.point-p {
+  margin: 0px 15px 0px 15px;
 }

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rules Blackjack</title>
+
+    <link rel="icon" type="image/png" href="/images/favicon.png" />
+    <link rel="stylesheet" href="style.css" />
+
+    <!--------- Icons google  ---------->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
+    />
+  </head>
+  <body>
+    <header>
+      <img class="logo" alt="logo" src="/images/favicon.png" />
+      <a href="index.html">Game</a>
+    </header>
+
+    <section class="rules-game">
+      <h1 class="title-rule">Rule of the game</h1>
+      <p>
+        Your objective is to get 21 points before the computer,<br />
+        if you exceed that number you will lose instantly.<br />
+        Choices:
+      </p>
+
+      <div class="container-choices">
+        <button class="hint rule-btn-hint">
+          <span class="material-symbols-outlined"> add_circle </span> Hint
+        </button>
+        <p class="hint-rule">Get 1 more card</p>
+        <button class="stand rule-btn-stand">
+          <span class="material-symbols-outlined"> front_hand </span> Stand
+        </button>
+        <p class="stand-rule">
+          Stop the game and check who was more near the 21 points
+        </p>
+      </div>
+
+      <div class="container-cards">
+        <img class="rule-card" alt="ace card" src="/images/AH.svg" />
+        <p class="point-p">
+          Ace cards = <br />
+          1 or 11 points
+        </p>
+        <img class="rule-card" alt="face card" src="/images/KH.svg" />
+        <p class="point-p">
+          Face cards = <br />
+          10 points
+        </p>
+        <img class="rule-card" alt="number card" src="/images/2H.svg" />
+        <p class="point-p">
+          Other cards cards = <br />
+          Their number
+        </p>
+      </div>
+    </section>
+  </body>
+</html>
