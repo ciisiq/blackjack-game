@@ -29,6 +29,17 @@
       src="https://unpkg.com/cardsJS/dist/cards.min.js"
       type="text/javascript"
     ></script>
+
+    <!--------- Icons google  ---------->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
+    />
   </head>
   <body>
     <header>
@@ -39,24 +50,30 @@
     </header>
 
     <section id="index" class="table-game">
-      <div class="block-computer">
-        <h1>Computer</h1>
+      <div class="container-computer">
+        <h1 class="computer-name">Computer</h1>
         <div class="hand" id="computer-cards" data-hand="cards: AS, KS"></div>
-        <h2>Computer Points</h2>
-        <span class="circle"> <h3 class="computer-points">05</h3></span>
+        <h2 class="computer-points">Computer Points</h2>
+        <span class="computer-circle">
+          <h3 class="computer-counter">05</h3></span
+        >
       </div>
 
       <div class="choices-btn">
-        <button class="hint">Hint</button>
+        <button class="hint">
+          <span class="material-symbols-outlined"> add_circle </span> Hint
+        </button>
         <button class="restart">Restart</button>
-        <button class="stand">Stand</button>
+        <button class="stand">
+          <span class="material-symbols-outlined"> front_hand </span> Stand
+        </button>
       </div>
 
-      <div class="block-user">
-        <h2>Your Points</h2>
-        <span class="circle"><h3 class="user-points">10</h3></span>
+      <div class="container-user">
+        <h2 class="user-points">Your Points</h2>
+        <span class="user-circle"><h3 class="user-counter">10</h3></span>
         <div class="hand" id="user-cards" data-hand="cards: 9H, 3H"></div>
-        <h1>You</h1>
+        <h1 class="user-name">You</h1>
       </div>
     </section>
 

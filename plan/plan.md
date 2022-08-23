@@ -2,9 +2,6 @@
 
 ## Structure game:
 
-- Home page game
-  - Show loading game (?)
-  - Button start game
 - Header:
   - Rules
   - Button for to play again
@@ -27,6 +24,12 @@
   - if Hint = +1 card in the hand and also for the computer
     Check if: (both sides) - if points === 21 = Blackjack WIN!; - if points > 21 = Loose game ask if the user want to play again; - if points < 21 = ask again user the options;
 - Always give the option for the user play again the game (restart);
+
+## Features
+
+- Loading page game
+  - Button start game
+- Mobile friendly
 
 ## Resources that I used:
 

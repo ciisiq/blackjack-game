@@ -36,12 +36,26 @@ a {
   flex-direction: column;
 }
 
-.block-computer,
-.block-user {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
+.container-computer {
+  display: grid;
+  grid-template-columns: 250px 350px 250px;
+  grid-template-rows: auto;
+  grid-template-areas:
+    ".       computer   ."
+    "points  cards      ."
+    "circle  cards      .";
+  margin-bottom: 50px;
+}
+
+.container-user {
+  display: grid;
+  grid-template-columns: 250px 350px 250px;
+  grid-template-rows: auto;
+  grid-template-areas:
+    ". cards-user circle-user"
+    ". cards-user points-user"
+    ". user .";
+  margin-top: 50px;
 }
 
 /* -------- Display points ---------- */
@@ -51,7 +65,8 @@ h1 {
   font-size: 42px;
 }
 
-.circle {
+.computer-circle,
+.user-circle {
   height: 70px;
   width: 70px;
   background-color: rgb(255, 252, 252);
@@ -60,10 +75,54 @@ h1 {
   align-items: center;
   justify-content: center;
   opacity: 60%;
+  justify-self: center;
 }
 
 h2 {
   color: #3dd94b;
+}
+
+/* -------- Display computer  ---------- */
+.computer-circle {
+  grid-area: circle;
+  justify-self: center;
+}
+
+.computer-name {
+  grid-area: computer;
+  justify-self: center;
+}
+
+#computer-cards {
+  grid-area: cards;
+  justify-self: center;
+}
+
+.computer-points {
+  grid-area: points;
+  justify-self: center;
+}
+
+/* -------- Display user  ---------- */
+
+.user-name {
+  grid-area: user;
+  justify-self: center;
+}
+
+.user-points {
+  grid-area: points-user;
+  justify-self: center;
+}
+
+.user-circle {
+  grid-area: circle-user;
+  justify-self: center;
+}
+
+#user-cards {
+  grid-area: cards-user;
+  justify-self: center;
 }
 
 /* -------- Button styles ---------- */
@@ -88,6 +147,7 @@ button {
   height: 70px;
   border: none;
   margin: 10px 4px 4px 10px;
+  font-size: 20px;
 
   /* animation */
   transition: all 300ms cubic-bezier(0.23, 1, 0.32, 1);
@@ -98,11 +158,20 @@ button {
 .hint {
   background-color: #cbe1ba;
   border: none;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .stand {
   background-color: #e1baba;
   border: none;
+  align-items: center;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 button:hover {
