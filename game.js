@@ -8,90 +8,95 @@ const btnHint = document.querySelector(".hint");
 const btnStand = document.querySelector(".stand");
 const btnRestart = document.querySelector(".restart");
 
-let countComputerPoints = 0;
-let countUserPoints = 0;
+let countComputerPoints;
+let countUserPoints;
+let deck;
+let computerHand;
+let userHand;
 
 const startGame = () => {
+  resetDefaultValues();
+
+  giveCards(userHand, 2);
+  giveCards(computerHand, 2);
+
+  countPoints();
+  checkRules();
+  updateScreenElement();
+};
+
+const resetDefaultValues = () => {
+  countComputerPoints = 0;
+  countUserPoints = 0;
+  deck = new Deck();
+  computerHand = [];
+  userHand = [];
+};
+
+const giveCards = (hand, n) => {
+  for (let i = 0; i < n; i++) {
+    hand.push(deck.drawCard());
+  }
+};
+
+const updateScreenElement = () => {
+  userCards.setAttribute("data-hand", `cards: ${userHand}`);
+  computerCards.setAttribute("data-hand", `cards: ${computerHand}`);
   computerPoints.textContent = countComputerPoints;
   userPoints.textContent = countUserPoints;
+};
 
-  //Function for to update the count points;
-  const countPoints = () => {
-    if (getCards.name === "face") {
-      countComputerPoints += computerPoints.textContent = 10;
-      countUserPoints += userPoints.textContent = 10;
-    } else if (getCards.name === "ace") {
-      let aceValue = randomAceValue();
-      countComputerPoints += computerPoints.textContent = aceValue;
-      countUserPoints += userPoints.textContent = aceValue;
-    } else {
-      countComputerPoints += computerPoints.textContent = getCards.value;
-      countUserPoints += userPoints.textContent = getCards.value;
-    }
-  };
+const checkRules = () => {
+  if (countComputerPoints > 21) {
+    console.log(`Computer Loose the game!`);
+  } else if (countUserPoints > 21) {
+    console.log(`You Loose the game!`);
+  }
 
-  //Give the user and computer 2 random cards
-  //Don't show 1 cards from computer (?)
+  if (countComputerPoints === 21) {
+    console.log(`BLACKJACK! Computer win!!`);
+  } else if (countUserPoints === 21) {
+    console.log(`BLACKJACK! You win!!`);
+  }
 
- 
-
-  // Show message to the user for to choices next step
-  //choices Buttons ---------
-  const hintButton = () => {
-    // give more 1 card
-    console.log(get1Card());
-    checkRules();
-  };
-
-  const StandButton = () => {
-    checkRules();
-  };
-
-  btnHint.addEventListener("click", hintButton);
-  btnStand.addEventListener("click", StandButton);
-
-  // Fucntion with the rules of the game
-  const checkRules = () => {
-    //check points from both if it is more than 21
-    if (countComputerPoints > 21) {
-      console.log(`Computer Loose the game!`);
-      //Ask if user want to play again
-    } else if (countUserPoints > 21) {
-      console.log(`You Loose the game!`);
-      //Ask if user want to play again
-    }
-
-    //check points from both if it is == 21
-    if (countComputerPoints === 21) {
-      console.log(`BLACKJACK! Computer win!!`);
-      //Ask if user want to play again
-    } else if (countUserPoints === 21) {
-      console.log(`BLACKJACK! You win!!`);
-      //Ask if user want to play again
-    }
-
-    //check points from both if it is < 21
-    if (countComputerPoints < 21) {
-      if (countComputerPoints < 17) {
-        btnHint.addEventListener("click", hintButton);
-      } else {
-        btnStand.addEventListener("click", StandButton);
-      }
-    } else if (countUserPoints < 21) {
-      console.log(`Do you want stand or hint?`);
-      // If Hint call function Hint;
+  if (countComputerPoints < 21) {
+    if (countComputerPoints < 17) {
       btnHint.addEventListener("click", hintButton);
-      //Else call function Stand;
+    } else {
       btnStand.addEventListener("click", StandButton);
     }
-  };
+  } else if (countUserPoints < 21) {
+    console.log(`Do you want stand or hint?`);
+    btnHint.addEventListener("click", hintButton);
+    btnStand.addEventListener("click", StandButton);
+  }
 };
+
+const countPoints = () => {
+  if (deck.cards[0] === "Q" || deck.cards[0] === "K" || deck.cards[0] === "J") {
+    countComputerPoints += computerPoints.textContent = 10;
+    countUserPoints += userPoints.textContent = 10;
+  } else if (deck.cards[0] === "A") {
+    let aceValue = deck.randomAceValue();
+    countComputerPoints += computerPoints.textContent = aceValue;
+    countUserPoints += userPoints.textContent = aceValue;
+  } else {
+    countComputerPoints += computerPoints.textContent = deck.cards[0];
+    countUserPoints += userPoints.textContent = deck.cards[0];
+  }
+};
+
+const resetGame = btnRestart.addEventListener("click", () => {
+  startGame();
+});
+
+const hintOption = btnHint.addEventListener("click", () => {
+  giveCards(userHand, 1);
+  checkRules();
+});
+
+const StandOption = btnStand.addEventListener("click", () => {
+  checkRules();
+});
 
 startGame();
-
-// restart the game
-const resetGame = () => {
-  startGame();
-};
-
-btnRestart.addEventListener("click", resetGame);
