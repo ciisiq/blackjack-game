@@ -117,6 +117,7 @@ h2 {
 .user-name {
   grid-area: user;
   justify-self: center;
+  margin-bottom: 3rem;
 }
 
 .user-points {
@@ -173,7 +174,6 @@ button {
 .hit {
   background-color: #cbe1ba;
   border: none;
-
   display: flex;
   justify-content: center;
   align-items: center;
@@ -183,10 +183,17 @@ button {
   background-color: #e1baba;
   border: none;
   align-items: center;
-
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.stand[disabled] {
+  background-color: rgb(175, 162, 162);
+}
+
+.hit[disabled] {
+  background-color: rgb(175, 162, 162);
 }
 
 button:hover {

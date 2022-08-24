@@ -17,6 +17,9 @@ let deck;
 let computerHand;
 let userHand;
 
+btnHit.disabled = false;
+btnStand.disabled = false;
+
 const startGame = () => {
   resetDefaultValues();
 
@@ -41,13 +44,6 @@ const giveCards = (hand, n) => {
   }
 };
 
-const updateScreenElement = () => {
-  userCards.setAttribute("data-hand", `cards: ${userHand}`);
-  computerCards.setAttribute("data-hand", `cards: ${computerHand}`);
-  computerPoints.textContent = countComputerPoints;
-  userPoints.textContent = countUserPoints;
-};
-
 const checkRules = () => {
   countComputerPoints = countPoints(computerHand);
   countUserPoints = countPoints(userHand);
@@ -56,21 +52,39 @@ const checkRules = () => {
     messageDisplay.textContent = `Computer Loose the game!`;
   } else if (countUserPoints > 21) {
     messageDisplay.textContent = `You Loose the game!`;
+    btnHit.disabled = true;
+    btnStand.disabled = true;
+  }
+
+  if (countComputerPoints === 21 && countUserPoints === 21) {
+    messageDisplay.textContent = `It's a draw!`;
   }
 
   if (countComputerPoints === 21) {
     messageDisplay.textContent = `BLACKJACK! Computer win!!`;
   } else if (countUserPoints === 21) {
     messageDisplay.textContent = `BLACKJACK! You win!!`;
+    btnHit.disabled = true;
+    btnStand.disabled = true;
   }
 
   if (countUserPoints < 21) {
     messageDisplay.textContent = `Do you want HIT or STAND?`;
+    if (btnStand.clicked === true) {
+      giveCards(computerHand, 1);
+      updateScreenElement();
+    }
   }
 };
 
+const updateScreenElement = () => {
+  userCards.setAttribute("data-hand", `cards: ${userHand}`);
+  computerCards.setAttribute("data-hand", `cards: ${computerHand}`);
+  computerPoints.textContent = countComputerPoints;
+  userPoints.textContent = countUserPoints;
+};
+
 const countPoints = (hand) => {
-  // TODO use reduce
   let acesNumber = 0;
   let result = 0;
   for (let i = 0; i < hand.length; i++) {
@@ -99,27 +113,30 @@ const countPoints = (hand) => {
 };
 
 const resetGame = () => {
-  updateScreenElement();
-  resetDefaultValues();
-  startGame();
+  document.location.reload(true);
 };
 
 const hitOption = () => {
   giveCards(userHand, 1);
+  updateScreenElement();
   checkRules();
+
+  console.log(userHand);
 };
 
 const standOption = () => {
-  if (countComputerPoints < 21) {
-    if (countComputerPoints < 17) {
-      hintOption();
-    }
+  if (countComputerPoints < 17) {
+    giveCards(computerHand, 1);
+    updateScreenElement();
   }
+
+  checkRules();
+  btnHit.disabled = true;
+  btnStand.disabled = true;
 };
 
 startGame();
 
-// setup
 btnHit.addEventListener("click", hitOption);
-btnRestart.addEventListener("click", startGame);
+btnRestart.addEventListener("click", resetGame);
 btnStand.addEventListener("click", standOption);
