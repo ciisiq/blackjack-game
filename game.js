@@ -4,9 +4,12 @@ const computerPoints = document.querySelector(".computer-counter");
 const computerCards = document.querySelector("#computer-cards");
 const userCards = document.querySelector("#user-cards");
 const userPoints = document.querySelector(".user-counter");
-const btnHint = document.querySelector(".hint");
+const btnHit = document.querySelector(".hit");
 const btnStand = document.querySelector(".stand");
 const btnRestart = document.querySelector(".restart");
+const messageDisplay = document.querySelector(".message");
+
+cards.options.width = 130;
 
 let countComputerPoints;
 let countUserPoints;
@@ -20,7 +23,6 @@ const startGame = () => {
   giveCards(userHand, 2);
   giveCards(computerHand, 2);
 
-  countPoints();
   checkRules();
   updateScreenElement();
 };
@@ -47,56 +49,77 @@ const updateScreenElement = () => {
 };
 
 const checkRules = () => {
+  countComputerPoints = countPoints(computerHand);
+  countUserPoints = countPoints(userHand);
+
   if (countComputerPoints > 21) {
-    console.log(`Computer Loose the game!`);
+    messageDisplay.textContent = `Computer Loose the game!`;
   } else if (countUserPoints > 21) {
-    console.log(`You Loose the game!`);
+    messageDisplay.textContent = `You Loose the game!`;
   }
 
   if (countComputerPoints === 21) {
-    console.log(`BLACKJACK! Computer win!!`);
+    messageDisplay.textContent = `BLACKJACK! Computer win!!`;
   } else if (countUserPoints === 21) {
-    console.log(`BLACKJACK! You win!!`);
+    messageDisplay.textContent = `BLACKJACK! You win!!`;
   }
 
-  if (countComputerPoints < 21) {
-    if (countComputerPoints < 17) {
-      btnHint.addEventListener("click", hintButton);
-    } else {
-      btnStand.addEventListener("click", StandButton);
+  if (countUserPoints < 21) {
+    messageDisplay.textContent = `Do you want HIT or STAND?`;
+  }
+};
+
+const countPoints = (hand) => {
+  // TODO use reduce
+  let acesNumber = 0;
+  let result = 0;
+  for (let i = 0; i < hand.length; i++) {
+    let x = hand[i][0];
+    switch (x) {
+      case "Q":
+      case "K":
+      case "J":
+      case "T":
+        result += 10;
+        break;
+      case "A":
+        result += 11;
+        acesNumber++;
+        break;
+      default:
+        result += parseInt(x);
+        break;
     }
-  } else if (countUserPoints < 21) {
-    console.log(`Do you want stand or hint?`);
-    btnHint.addEventListener("click", hintButton);
-    btnStand.addEventListener("click", StandButton);
   }
+  while (result > 21 && acesNumber > 0) {
+    result -= 10;
+    acesNumber--;
+  }
+  return result;
 };
 
-const countPoints = () => {
-  if (deck.cards[0] === "Q" || deck.cards[0] === "K" || deck.cards[0] === "J") {
-    countComputerPoints += computerPoints.textContent = 10;
-    countUserPoints += userPoints.textContent = 10;
-  } else if (deck.cards[0] === "A") {
-    let aceValue = deck.randomAceValue();
-    countComputerPoints += computerPoints.textContent = aceValue;
-    countUserPoints += userPoints.textContent = aceValue;
-  } else {
-    countComputerPoints += computerPoints.textContent = deck.cards[0];
-    countUserPoints += userPoints.textContent = deck.cards[0];
-  }
-};
-
-const resetGame = btnRestart.addEventListener("click", () => {
+const resetGame = () => {
+  updateScreenElement();
+  resetDefaultValues();
   startGame();
-});
+};
 
-const hintOption = btnHint.addEventListener("click", () => {
+const hitOption = () => {
   giveCards(userHand, 1);
   checkRules();
-});
+};
 
-const StandOption = btnStand.addEventListener("click", () => {
-  checkRules();
-});
+const standOption = () => {
+  if (countComputerPoints < 21) {
+    if (countComputerPoints < 17) {
+      hintOption();
+    }
+  }
+};
 
 startGame();
+
+// setup
+btnHit.addEventListener("click", hitOption);
+btnRestart.addEventListener("click", startGame);
+btnStand.addEventListener("click", standOption);

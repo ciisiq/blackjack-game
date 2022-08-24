@@ -42,7 +42,7 @@
     <section id="index" class="table-game">
       <div class="container-computer">
         <h1 class="computer-name">Computer</h1>
-        <div class="hand" id="computer-cards" data-hand="cards: AS, KS"></div>
+        <div class="hand" id="computer-cards" data-hand=""></div>
         <h2 class="computer-points">Computer Points</h2>
         <span class="computer-circle">
           <h3 class="computer-counter">05</h3></span
@@ -50,8 +50,8 @@
       </div>
 
       <div class="choices-btn">
-        <button class="hint">
-          <span class="material-symbols-outlined"> add_circle </span> Hint
+        <button class="hit">
+          <span class="material-symbols-outlined"> add_circle </span> Hit
         </button>
         <button class="restart">Restart</button>
         <button class="stand">
@@ -59,10 +59,12 @@
         </button>
       </div>
 
+      <p class="message"></p>
+
       <div class="container-user">
         <h2 class="user-points">Your Points</h2>
         <span class="user-circle"><h3 class="user-counter">10</h3></span>
-        <div class="hand" id="user-cards" data-hand="cards: 9H, 3H"></div>
+        <div class="hand" id="user-cards" data-hand=""></div>
         <h1 class="user-name">You</h1>
       </div>
     </section>

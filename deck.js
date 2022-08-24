@@ -6,12 +6,9 @@ class Deck {
   }
 
   drawCard() {
-    return this.cards.splice(Math.floor(Math.random() * this.cards.length), 1);
+    return this.cards.splice(
+      Math.floor(Math.random() * this.cards.length),
+      1
+    )[0];
   }
-
-  randomAceValue = () => {
-    let aceRandom;
-    aceRandom = Math.floor(Math.random() < 0.5 ? 1 : 11);
-    return aceRandom;
-  };
 }

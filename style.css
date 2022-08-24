@@ -108,6 +108,8 @@ h2 {
 .computer-points {
   grid-area: points;
   justify-self: center;
+  align-self: end;
+  margin-bottom: 0.6rem;
 }
 
 /* -------- Display user  ---------- */
@@ -125,11 +127,17 @@ h2 {
 .user-circle {
   grid-area: circle-user;
   justify-self: center;
+  align-self: end;
+  margin-bottom: 0.6rem;
 }
 
 #user-cards {
   grid-area: cards-user;
   justify-self: center;
+}
+
+.message {
+  margin-top: 2rem;
 }
 
 /* -------- Button styles ---------- */
@@ -162,7 +170,7 @@ button {
   will-change: transform;
 }
 
-.hint {
+.hit {
   background-color: #cbe1ba;
   border: none;
 
@@ -198,6 +206,7 @@ button:active {
 .title-rule {
   margin-bottom: 50px;
 }
+
 p {
   color: #ffffff;
   font-size: 24px;
@@ -211,8 +220,8 @@ p {
   grid-template-columns: 250px 250px;
   grid-template-rows: auto;
   grid-template-areas:
-    " hint stand"
-    " hint-p stand-p";
+    " hit stand"
+    " hit-p stand-p";
   margin-top: 50px;
   gap: 10px;
 }
@@ -222,13 +231,13 @@ p {
   justify-self: center;
 }
 
-.rule-btn-hint {
-  grid-area: hint;
+.rule-btn-hit {
+  grid-area: hit;
   justify-self: center;
 }
 
 .hint-rule {
-  grid-area: hint-p;
+  grid-area: hit-p;
   justify-self: center;
   align-items: center;
 }
