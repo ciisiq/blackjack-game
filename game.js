@@ -1,5 +1,3 @@
-// If I used some code from outside, you can see on "plan.md" inside the folder plan 😉
-
 const computerPoints = document.querySelector(".computer-counter");
 const computerCards = document.querySelector("#computer-cards");
 const userCards = document.querySelector("#user-cards");
@@ -12,10 +10,8 @@ const messageDisplay = document.querySelector(".message");
 let countComputerPoints;
 let countUserPoints;
 let deck;
-// let computerHand;
-// let userHand;
-let computerAceCount = 0;
-let userAceCount = 0;
+let userHand = [];
+let computerHand = [];
 
 btnHit.disabled = false;
 btnStand.disabled = false;
@@ -23,36 +19,32 @@ btnStand.disabled = false;
 const startGame = () => {
   resetDefaultValues();
 
-  // giveCards(userHand, 2);
-  for (let i = 0; i < 2; i++) {
-    let cardImg = document.createElement("img");
-    let card = deck.pop();
-    cardImg.src = "./cards/" + card + ".png";
-    countUserPoints += getValue(card);
-    checkAce(countUserPoints, userAceCount);
-    userCards.append(cardImg);
-    userHand.push(countUserPoints);
-    userPoints.textContent = countUserPoints;
-  }
+  //Give computer 2 cards
+  giveCard(computerCards, computerHand, 2);
+  countComputerPoints = countPoints(computerHand);
+  computerPoints.textContent = countComputerPoints;
 
-  // giveCards(computerHand, 2);
-  for (let i = 0; i < 2; i++) {
-    let cardImg = document.createElement("img");
-    let card = deck.pop();
-    cardImg.src = "./cards/" + card + ".png";
-    countComputerPoints += getValue(card);
-    checkAce(computerAceCount);
-    computerHand.push(countComputerPoints);
-    computerCards.append(cardImg);
-    computerPoints.textContent = countComputerPoints;
-  }
+  // Give user 2 cards
+  giveCard(userCards, userHand, 2);
+  countUserPoints += countPoints(userHand);
+  userPoints.textContent = countUserPoints;
 
   checkRules();
 };
 
+const giveCard = (player, hand, n) => {
+  for (let i = 0; i < n; i++) {
+    let cardImg = document.createElement("img");
+    let card = deck.pop();
+    hand.push(card);
+    cardImg.src = "./cards/" + card + ".png";
+    player.append(cardImg);
+  }
+};
+
 const createDeck = () => {
   //prettier-ignore
-  let values = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
+  let values = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K"];
   let suits = ["C", "D", "H", "S"];
   deck = [];
 
@@ -78,139 +70,101 @@ const resetDefaultValues = () => {
   countUserPoints = 0;
   createDeck();
   suffleDeck();
-  computerHand = [];
-  userHand = [];
 };
 
-// const giveCards = (hand, n) => {
-//   for (let i = 0; i < n; i++) {
-//     hand.push(deck.drawCard());
-//   }
-// };
-
 const checkRules = () => {
-  // countComputerPoints = countPoints(computerHand);
-  // countUserPoints = countPoints(userHand);
-
-  if (countComputerPoints > 21) {
-    messageDisplay.textContent = `Computer Loose the game!`;
-    btnHit.disabled = true;
-    btnStand.disabled = true;
+  if (countUserPoints > 21 && countComputerPoints > 21) {
+    messageDisplay.textContent = `Both lost the game, try again!`;
+    disableBtn();
   } else if (countUserPoints > 21) {
-    messageDisplay.textContent = `You Loose the game!`;
-    btnHit.disabled = true;
-    btnStand.disabled = true;
+    messageDisplay.textContent = `You lost the game, try again!`;
+    disableBtn();
+  } else if (countComputerPoints > 21) {
+    messageDisplay.textContent = `You win! Computer > 21 points!`;
+    disableBtn();
   } else if (countComputerPoints === 21 && countUserPoints === 21) {
     messageDisplay.textContent = `It's a draw!`;
   } else if (countComputerPoints === 21) {
     messageDisplay.textContent = `BLACKJACK! Computer win!!`;
+    disableBtn();
   } else if (countUserPoints === 21) {
     messageDisplay.textContent = `BLACKJACK! You win!!`;
-    btnHit.disabled = true;
-    btnStand.disabled = true;
+    disableBtn();
   } else {
     messageDisplay.textContent = `Do you want HIT or STAND?`;
-    if (btnStand.clicked === true) {
-      computerCheck();
-    }
   }
 };
 
-// const updateScreenElement = () => {
-//   userCards.setAttribute("data-hand", `cards: ${userHand}`);
-//   computerCards.setAttribute("data-hand", `cards: ${computerHand}`);
-//   computerPoints.textContent = countComputerPoints;
-//   userPoints.textContent = countUserPoints;
-// };
-
-const getValue = (card) => {
-  let data = card.split("-");
-  let value = data[0];
-
-  if (isNaN(value)) {
-    if (value === "A") {
-      return 11;
-    }
-    return 10;
-  }
-
-  return parseInt(value);
+const disableBtn = () => {
+  btnHit.disabled = true;
+  btnStand.disabled = true;
 };
 
-const checkAce = (points, handAce) => {
+const countPoints = (cards) => {
   let acesNumber = 0;
+  let result = 0;
 
-  while (points > 21 && handAce > 0) {
-    points -= 10;
+  for (let i = 0; i < cards.length; i++) {
+    let data = cards[i].split("-");
+    let value = data[0];
+
+    switch (value) {
+      case "Q":
+      case "K":
+      case "J":
+      case "T":
+        result += 10;
+        break;
+      case "A":
+        result += 11;
+        acesNumber++;
+        break;
+      default:
+        result += parseInt(value);
+        break;
+    }
+  }
+
+  while (result > 21 && acesNumber > 0) {
+    result = result - 10;
     acesNumber--;
   }
 
-  return points;
+  return result;
 };
-
-// const countPoints = (hand) => {
-//   let acesNumber = 0;
-//   let result = 0;
-//   for (let i = 0; i < hand.length; i++) {
-//     let x = hand[i][0];
-//     switch (x) {
-//       case "Q":
-//       case "K":
-//       case "J":
-//       case "T":
-//         result += 10;
-//         break;
-//       case "A":
-//         result += 11;
-//         acesNumber++;
-//         break;
-//       default:
-//         result += parseInt(x);
-//         break;
-//     }
-//   }
-//   while (result > 21 && acesNumber > 0) {
-//     result -= 10;
-//     acesNumber--;
-//   }
-//   return result;
-// };
 
 const resetGame = () => {
   document.location.reload(true);
 };
 
 const hitOption = () => {
-  let cardImg = document.createElement("img");
-  let card = deck.pop();
-  cardImg.src = "./cards/" + card + ".png";
-  countUserPoints += getValue(card);
-  userCards.append(cardImg);
+  giveCard(userCards, userHand, 1);
+  countUserPoints = countPoints(userHand);
   userPoints.textContent = countUserPoints;
 
-  computerCheck();
   checkRules();
-
-  return countUserPoints;
 };
 
 const standOption = () => {
-  checkRules();
-  btnHit.disabled = true;
-  btnStand.disabled = true;
+  computerCheck();
+
+  if (countUserPoints > countComputerPoints || countComputerPoints > 21) {
+    messageDisplay.textContent = `😍😍 You win!!`;
+  } else if (countComputerPoints > countUserPoints) {
+    messageDisplay.textContent = `Oh noo.. 😭😭 Computer win!`;
+  } else if (countComputerPoints === countUserPoints) {
+    messageDisplay.textContent = `It's a draw!`;
+  }
+
+  disableBtn();
 };
 
 const computerCheck = () => {
   if (countComputerPoints < 17) {
-    let cardImg = document.createElement("img");
-    let card = deck.pop();
-    cardImg.src = "./cards/" + card + ".png";
-    countComputerPoints += getValue(card);
-    computerHand = countComputerPoints;
-    computerCards.append(cardImg);
+    giveCard(computerCards, computerHand, 1);
+    countComputerPoints = countPoints(computerHand);
     computerPoints.textContent = countComputerPoints;
   }
-  return countComputerPoints;
 };
 
 startGame();
