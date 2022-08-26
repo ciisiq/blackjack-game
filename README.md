@@ -1,6 +1,6 @@
 # ♥️♦️ Blackjack game ♠️♣️
 
-This is a simples game where you need get 21 points before de computer but you can't pass this number or you lost the game.
+This is a simples game mande in vanilla Js. Where you need get 21 points before de computer but you can't pass this number or you lost the game.
 
 ## Demo
 
@@ -8,8 +8,6 @@ This is a simples game where you need get 21 points before de computer but you c
 
 ## Screenshots
 
-Logic game<br>
-![Logic game](/plan/game_logic.png)<br>
 Game table<br>
 ![App table game Screenshot](/images/game.png)<br>
 Rules page<br>
